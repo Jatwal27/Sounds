@@ -44,23 +44,57 @@ public class playSounds {
 
             // 8 adjacent musical notes
             List<String> notes1 = Arrays.asList("5C","5D","5E","5F","5G","5A","5B","6C");
-
+            System.out.println("List/Normal Order");
             // play notes in sequence using the List
             for (String n : notes1) {
                 play(n, 800);
                 rest(200);
             }
+
             /////////////////
             // TODO: play notes in reverse order using Stack
             rest(1000);
+
+            Stack<String> notesStack = new Stack<String>();
+
+            for (String n : notes1) {
+                notesStack.push(n);
+            }
+            while (!notesStack.isEmpty()) {
+                String note = notesStack.pop();
+                play(note, 800);
+                rest(200);
+            }
 
             /////////////////
             // TODO: play notes in the same order using Queue
             rest(1000);
 
+            Queue<String> notesQueue = new LinkedList<>(notes1);
+
+            while (!notesQueue.isEmpty()) {
+                String note = notesQueue.poll();
+                play(note, 800);
+                rest(200);
+            }
+
             /////////////////
             // TODO: play notes in mixed order (one from front, one from back) using Deque
             rest(1000);
+
+            Deque<String> notesDeque = new LinkedList<>(notes1);
+
+            while (!notesDeque.isEmpty()) {
+                String note;
+
+                note = notesDeque.pollFirst();
+                play(note, 800);
+                rest(200);
+
+                note = notesDeque.pollLast();
+                play(note, 800);
+                rest(200);
+            }
 
             /////////////////
             // TODO: play notes in random order using ArrayList
@@ -68,8 +102,16 @@ public class playSounds {
             // int randomNum = ThreadLocalRandom.current().nextInt(arrayList1.size());
             rest(1000);
 
-            /////////////////
+            ArrayList<String> NotesArrayList = new ArrayList<String>(notes1);
 
+            while(!NotesArrayList.isEmpty()){
+                int noteIndex = ThreadLocalRandom.current().nextInt(NotesArrayList.size());
+                play(NotesArrayList.get(noteIndex), 800);
+                NotesArrayList.remove(noteIndex);
+                rest(200);
+            }
+
+            /////////////////
             // * finish up
             synth.close();
         } catch (Exception e) {
